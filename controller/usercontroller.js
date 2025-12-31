@@ -265,7 +265,7 @@ const industrial = await properties.countDocuments({
   }
 };
 
-// get users for admin
+// get users for admin/
 exports.getAllUsersForAdmincontroller = async (req, res) => {
   try {
     
