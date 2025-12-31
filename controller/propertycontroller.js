@@ -210,52 +210,7 @@ exports.updatepropertystatuscontroller = async (req, res) => {
                 res.status(500).json(error)
         }
 
-}
-
-// sort and filter 
-exports.sortFilterProperties = async (req, res) => {
-  try {
-    const { sortBy } = req.body;
-
-    
-    if (sortBy === "newest" || sortBy === "oldest") {
-      const sortQuery = {
-        createdAt: sortBy === "newest" ? -1 : 1
-      };
-
-      const sortedproperties = await properties.find({}).sort(sortQuery);
-      return res.status(200).json(sortedproperties);
-    }
-
-    
-    if (sortBy === "priceLow" || sortBy === "priceHigh") {
-      const sortOrder = sortBy === "priceLow" ? 1 : -1;
-
-      const sortedproperties = await properties.aggregate([
-        {
-          $addFields: {
-            numericPrice: {
-              $toDouble: "$price"
-            }
-          }
-        },
-        {
-          $sort: { numericPrice: sortOrder }
-        }
-      ]);
-
-      return res.status(200).json(sortedproperties);
-    }
-
-
-    const allProperties = await properties.find({});
-    res.status(200).json(allProperties);
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json(error);
-  }
-};
+}   
 
 // add to wishlist
 exports.addToWishlistController = async (req, res) => {
@@ -295,4 +250,14 @@ exports.deleteWishlistController = async (req, res) => {
     res.status(500).json(error)
   }
 }
+
+// home properties in landing
+exports.getlandingPropertiescontroller = async (req, res) => {
+  try {
+    const allproperties = await properties.find().limit(6).sort({ createdAt: -1 });
+    res.status(200).json(allproperties);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 

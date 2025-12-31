@@ -2,7 +2,7 @@ const express = require("express")
 const { registercontroller, logincontroller, updateuserprofilecontroller, becomeSellerController, getallrequestsforadmincontroller, approvesellercontroller, rejectsellercontroller, getupdatedprofilecontroller, checkSellerStatusController, ifinterrestedcontroller, getSellerInterestedController, deleteInterestedrequestsController, deleteuseraddedrequestscontroller, getAdminDashboardCounts, getAllUsersForAdmincontroller } = require("./controller/usercontroller")
 const jwtmiddleware = require("./middlewares/jwtmiddleware")
 const multerconfig = require("./middlewares/imgmultermiddleware")
-const { addpropertycontroller, getpropertiesathomecontroller, getapropertycontroller, getsearchpropscontroller, getselleraddedpropscontroller, updatepropertycontroller, deletepropertycontroller, updatepropertystatuscontroller, getPropertiesWithSortFiltercontroller, sortFilterProperties, updatePropertyController, addToWishlistController, getWishlistController, deleteWishlistController } = require("./controller/propertycontroller")
+const { addpropertycontroller, getpropertiesathomecontroller, getapropertycontroller, getsearchpropscontroller, getselleraddedpropscontroller, updatepropertycontroller, deletepropertycontroller, updatepropertystatuscontroller, getPropertiesWithSortFiltercontroller, sortFilterProperties, updatePropertyController, addToWishlistController, getWishlistController, deleteWishlistController, getlandingPropertiescontroller } = require("./controller/propertycontroller")
 const adminjwtmiddlewarenew = require("./middlewares/adminjwtmiddlewarenew")
 
 const router = express.Router()
@@ -43,9 +43,6 @@ router.put("/markassold/:id",updatepropertystatuscontroller)
 // become seller 
 router.post("/becomeseller",jwtmiddleware,multerconfig.array("idproof",2),becomeSellerController)
 
-// sort and filter
-router.post("/sort-filter-properties", sortFilterProperties);
-
 // if interested
 router.post("/interested",ifinterrestedcontroller)
 
@@ -63,6 +60,11 @@ router.get("/wishlist/:userEmail", getWishlistController)
 
 // delete from wishlist
 router.delete("/wishlist/:id", deleteWishlistController)
+
+// get landing properties
+router.get("/landingproperties", getlandingPropertiescontroller);
+
+
 
 //......................admin...............................//
 
@@ -83,6 +85,8 @@ router.get("/dashboardcounts", getAdminDashboardCounts);
 
 // get all users for admin
 router.get("/allusers", getAllUsersForAdmincontroller);
+
+
 
 
 module.exports = router

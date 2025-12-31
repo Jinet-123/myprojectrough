@@ -200,8 +200,7 @@ const propertyschema = new mongoose.Schema({
     sellstatus : {
         type : String,
         default : "For Sale"
-    }
-    
+    } 
     
     
 
