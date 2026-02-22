@@ -4,7 +4,7 @@ const adminjwtmiddlewarenew = (req,res,next) =>{
     console.log("inside jwt middlware");
     const token = req.headers.authorization.split(" ")[1]
     console.log(token);
-
+  
   try 
     { 
     const jwtresponse = jwt.verify(token, process.env.JWTsecretkey)
@@ -13,6 +13,7 @@ const adminjwtmiddlewarenew = (req,res,next) =>{
     req.role = jwtresponse.role
     if(jwtresponse.role == "admin"){
             next()
+            
     }else{
         res.status(401).json(`Unauthorized user`)
     }
